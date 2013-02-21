@@ -81,7 +81,7 @@ public final class DatastoreManager {
   }
   
   public static void populateDriverData(int year, int raceNum) {
-    List<Driver> enteringDrivers = DriverManager.getEntries(year, raceNum);
+    List<Driver> enteringDrivers = YahooDriverManager.getEntries(year, raceNum);
     int standingsYear = 0;
     int standingsRaceNum = 0;
     if (raceNum > 1) {
@@ -91,7 +91,7 @@ public final class DatastoreManager {
       standingsYear = year - 1;
       standingsRaceNum = 36; //TODO: how to remove hardcoding?
     }
-    List<Driver> standingsDrivers = DriverManager.getStandings(standingsYear, standingsRaceNum);
+    List<Driver> standingsDrivers = YahooDriverManager.getStandings(standingsYear, standingsRaceNum);
     
     // Get all datastore drivers already populated from this race.
     Key<Race> raceKey = getRaceKeyByYearAndWeek(year, raceNum);
@@ -134,7 +134,7 @@ public final class DatastoreManager {
   public static void populateResults(Race race) {
     int year = race.getYear();
     int raceNum = race.getWeek();
-    List<Driver> resultsDrivers = DriverManager.getResults(year, raceNum);
+    List<Driver> resultsDrivers = YahooDriverManager.getResults(year, raceNum);
     List<Driver> datastoreDrivers = getDriversByYearAndWeek(year, raceNum);
     for (Driver datastoreDriver : datastoreDrivers) {
       for (Driver resultDriver : resultsDrivers) {
