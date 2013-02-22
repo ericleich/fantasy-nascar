@@ -17,8 +17,8 @@ public class Race {
     "Darlington", "Charlotte", "Dover", "Pocono", "Michigan",
     "Sonoma", "Kentucky", "Daytona", "Loudon", "Indianapolis",
     "Pocono", "Watkins Glen", "Michigan", "Bristol", "Atlanta",
-    "Richmond", "Chicago", "Loudon", "Dover", "Talladega",
-    "Charlotte", "Kansas", "Martinsville", "Texas", "Phoenix", "Homestead" };
+    "Richmond", "Chicago", "Loudon", "Dover", "Kansas",
+    "Charlotte", "Talladega", "Martinsville", "Texas", "Phoenix", "Homestead" };
   
   public Race() {
     // Empty.
