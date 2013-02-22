@@ -5,11 +5,8 @@
 
 <%@ page import="com.eleichtenschlag.nascar.model.DatastoreManager" %>
 <%@ page import="com.eleichtenschlag.nascar.model.Driver" %>
-<%@ page import="com.eleichtenschlag.nascar.model.DriverManager" %>
-<%@ page import="com.eleichtenschlag.nascar.model.Lineup" %>
 <%@ page import="com.eleichtenschlag.nascar.model.NascarConfig" %>
 <%@ page import="com.eleichtenschlag.nascar.model.NascarConfigSingleton" %>
-<%@ page import="com.eleichtenschlag.nascar.model.Owner" %>
 <%@ page import="com.eleichtenschlag.nascar.model.Team" %>
 <%@ page import="com.eleichtenschlag.nascar.model.Race" %>
 

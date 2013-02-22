@@ -261,6 +261,11 @@ public class AdminAdvancedServlet extends HttpServlet {
     filters.put("year", year);
     filters.put("week", raceNum);
     List<Race> races = DatastoreManager.getAllObjectsWithFilters(Race.class, filters);
+    if (races == null || races.isEmpty()) {
+      // Populate race objects for given year. Then try grabbing races again.
+      DatastoreManager.populateRaces(year);
+      races = DatastoreManager.getAllObjectsWithFilters(Race.class, filters);
+    }
     Race race = races.get(0);
     return race;
   }
