@@ -26,7 +26,16 @@ public final class YahooDriverManager {
   private static final String RESULTS_DIV_ID = "leaderboard";
   private static final String UNFORMATTED_RESULTS_URL =
     "http://sports.yahoo.com/nascar/sprint/races/%d/results?year=%d";
-  
+
+  // Yahoo has a weird race numbering format. These are the hardcoded race ids for each race.
+  private static final int[] YAHOO_RACE_NUMBER = { /** Prefixed so numbers are 1-indexed */ 0,
+      1, 53, 28, 31, 26, 15,
+      32, 55, 5, 22, 30, 3,
+      4, 7, 6, 8, 56, 9,
+      10, 12, 11, 13, 14, 16,
+      25, 18, 38, 33, 19, 39,
+      21, 41, 20, 54, 23, 42 };
+
   public static List<Driver> getStandings(int year, int raceNum) {
     List<Driver> drivers = new ArrayList<Driver>();
     Document document = null;
@@ -48,6 +57,11 @@ public final class YahooDriverManager {
         Driver driver = new Driver();
         // Rank is first item in the table.
         String rankString = rowElements.get(0).html();
+        // Not sure why, but some items have a "wc" prefixed. Get past that.
+        int spaceIndex = rankString.indexOf("&nbsp;");
+        if (spaceIndex >= 0) {
+          rankString = rankString.substring(rankString.indexOf("&nbsp;"));
+        }
         Integer rank = Integer.parseInt(rankString.replace("&nbsp;", "").trim());
         driver.setRank(rank);
         // Name is third item in the table.
@@ -135,30 +149,16 @@ public final class YahooDriverManager {
     return drivers;
   }
 
-//  private static Integer calculatePoints(String pointsString, Integer finishPosition) {
-//    Integer points = 0;
-//    if (pointsString.equals("0")) {
-//      points = 44 - finishPosition;
-//      if (finishPosition == 1) { // Non-scoring racer was winner.
-//        points += 4; // 3 for winning, 1 for leading a lap.
-//      }
-//    } else if (pointsString.contains("/")) {
-//      points = Integer.parseInt(
-//          pointsString.substring(0, pointsString.indexOf("/")));
-//    }
-//    return points;
-//  }
-
   private static String generateStandingsUrl(int year, int raceNum) {
     return STANDINGS_URL;
   }
 
   private static String generateResultsUrl(int year, int raceNum) {
-    return String.format(UNFORMATTED_RESULTS_URL, raceNum, year);
+    return String.format(UNFORMATTED_RESULTS_URL, YAHOO_RACE_NUMBER[raceNum], year);
   }
 
   private static String generateQualifyingUrl(int year, int raceNum) {
-    return String.format(UNFORMATTED_QUALIFYING_URL, raceNum, year);
+    return String.format(UNFORMATTED_QUALIFYING_URL, YAHOO_RACE_NUMBER[raceNum], year);
   }
 
   public static String generateDriverSelectionFormHtml(List<Driver> drivers) {
