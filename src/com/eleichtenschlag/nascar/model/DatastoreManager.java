@@ -120,10 +120,15 @@ public final class DatastoreManager {
       }
       if (datastoreDriver == null) {
         datastoreDriver = new Driver(driverEntering.getName(), year, raceNum);
+        // Populate driver from datastore with rank from previous week standings.
+        /**
+         * This is only done if the driver wasn't previously in the datastore. Yahoo doesn't have
+         * weekly standings, only current. If going back to previous weeks, we don't want to
+         * override ranks with current standings.
+         **/
+        datastoreDriver.setRank(standingsDriver.getRank());
         datastoreDrivers.add(datastoreDriver);
       }
-      // Populate driver from datastore with rank from previous week standings.
-      datastoreDriver.setRank(standingsDriver.getRank());
     }
     
     // Update the drivers in the database.
